@@ -20,13 +20,19 @@ public class AdminService {
     private CourseRepository courseRepository;
     AdminRepository adminRepository;
 
-    public Course addcourse(Course course){
+    public Course addCourse(Course course){
         return courseRepository.save(course);
     }
 
-    public String removecourse(Long courseId) {
+    public String removeCourse(Long courseId) {
         courseRepository.deleteById(courseId);
         return "course removed successfully";
+    }
+
+    public String updateCourse(Course course) {
+        courseRepository.findById(course.getId()).orElseThrow(() -> new AdminNotFoundException("Course"));
+        courseRepository.save(course);
+        return "course updated successfully";
     }
 
     public String createAdmin(Admin admin) {
